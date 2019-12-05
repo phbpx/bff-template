@@ -2,7 +2,7 @@ const morgan = require('morgan');
 const { slice, indexOf, compose } = require('ramda');
 const { logInfo } = require('./logger');
 
-const formatMessage = message => slice(0, indexOf('/n', message), message);
+const formatMessage = (message) => slice(0, indexOf('/n', message), message);
 const writeStream = compose(
   logInfo,
   formatMessage,
@@ -14,5 +14,5 @@ const httpLogger = morgan(
 );
 
 module.exports = {
-  httpLogger
+  httpLogger,
 };
