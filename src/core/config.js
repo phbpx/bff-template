@@ -1,6 +1,6 @@
 const config = {
   app: process.env.APP_NAME || 'bff-sample',
-  env: process.env.API_ENV || 'production',
+  env: process.env.NODE_ENV || 'production',
   log: {
     level: process.env.LOG_LEVEL || 'info',
   },
