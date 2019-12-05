@@ -22,8 +22,7 @@ const logger = createLogger({
   exitOnError: false,
 });
 
-const logInfo = logger.info;
-
 module.exports = {
-  logInfo,
+  logInfo: logger.info,
+  logError: logger.error,
 };
