@@ -1,0 +1,25 @@
+version: '3.6'
+
+services:
+  app:
+    build: .
+    environment:
+      API_ENV: "development"
+      HTTP_PORT: 3000
+    ports:
+      - "3000:3000"
+    entrypoint: node src/bin/server.js
+    volumes:
+      - .:/app
+
+  lint:
+    build: .
+    entrypoint: npm run lint
+    volumes:
+      - .:/app
+
+  test:
+    build: .
+    entrypoint: npm run test
+    volumes:
+      - .:/app
