@@ -8,7 +8,7 @@ services:
       HTTP_PORT: 3000
     ports:
       - "3000:3000"
-    entrypoint: node src/bin/server.js
+    entrypoint: node bin/server.js
     volumes:
       - .:/app
 

@@ -1,6 +1,6 @@
 const { transports, format, createLogger } = require('winston');
 const os = require('os');
-const config = require('../../config');
+const config = require('./config');
 
 const {
   combine,
@@ -8,7 +8,7 @@ const {
   json,
 } = format;
 
-module.exports = createLogger({
+const logger = createLogger({
   level: config.log.level,
   format: combine(
     timestamp(),
@@ -21,3 +21,9 @@ module.exports = createLogger({
   transports: [new transports.Console()],
   exitOnError: false,
 });
+
+const logInfo = logger.info;
+
+module.exports = {
+  logInfo,
+};

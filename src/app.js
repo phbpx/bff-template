@@ -1,5 +1,5 @@
 const express = require('express');
-const { httpLogger } = require('./middlewares');
+const { httpLogger } = require('./core/middlewares');
 
 const app = express();
 

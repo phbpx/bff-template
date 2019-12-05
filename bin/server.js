@@ -1,9 +1,9 @@
 const http = require('http');
-const app = require('./src/app');
-const logger = require('./src/lib/logger');
-const config = require('./src/config');
+const app = require('../src/app');
+const { logInfo } = require('../src/core/logger');
+const config = require('../src/core/config');
 
-const onListening = () => logger.info(`${config.app} listening on port ${config.http.port}`);
+const onListening = () => logInfo(`${config.app} listening on port ${config.http.port}`);
 const gracefulShutdown = server => (
     () => server.close(() => process.exit(0))
 );
