@@ -1,19 +1,18 @@
-FROM node:12-alpine
+FROM registry.devneon.com.br/base-images/node:lts-neon as dependencies
 
-RUN mkdir -p /app/node_modules && chown -R node:node /app
+WORKDIR /dependencies
+
+COPY . /dependencies
+
+RUN npm ci --production
+
+FROM registry.devneon.com.br/base-images/node:lts-neon as runtime
 
 WORKDIR /app
 
-COPY package*.json ./
-
-RUN npm install
-
-COPY . .
-
-COPY --chown=node:node . .
+COPY ./src src/
+COPY --from=dependencies /dependencies/node_modules node_modules/
 
 USER node
 
-EXPOSE 3000
-
-CMD [ "node", "src/bin/server.js" ]
+ENTRYPOINT [ "node", "bin/server.js" ]
