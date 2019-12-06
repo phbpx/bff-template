@@ -5,7 +5,7 @@ const {
   buildObjectFromPropertiesOf,
   getNonNullFields,
   removePatternFromKeys,
-} = require('../helpers/objectHelpers');
+} = require('../helpers/object');
 
 /**
  * Removes a given pattern from all the keys of the given object,

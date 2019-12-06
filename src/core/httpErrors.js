@@ -27,5 +27,3 @@ const statusCodeMessageError = {
       'Todo mundo erra e dessa vez fomos nós. Por favor nos diga o que aconteceu!',
   },
 };
-
-module.exports = { statusCodeMessageError };

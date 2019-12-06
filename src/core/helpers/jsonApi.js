@@ -1,14 +1,12 @@
 const { checkSchema } = require('express-validator');
 
-const { EnumHttpStatusCode } = require('../common/enums/generics');
-
 const validateBody = (newAttributes) => {
   const defaultBody = {
     data: {
       in: ['body'],
       exists: true,
       errorMessage: {
-        status: EnumHttpStatusCode.CLIENT_ERROR_VALIDATION,
+        status: 422,
         source: { pointer: '' },
         title: 'Erro interno',
         detail: 'Erro na estrutura do request',
@@ -18,7 +16,7 @@ const validateBody = (newAttributes) => {
       in: ['body'],
       exists: true,
       errorMessage: {
-        status: EnumHttpStatusCode.CLIENT_ERROR_VALIDATION,
+        status: 422,
         source: { pointer: '/data/attributes' },
         title: 'Erro interno',
         detail: 'Atributos ausentes',
@@ -28,7 +26,7 @@ const validateBody = (newAttributes) => {
       in: ['body'],
       exists: true,
       errorMessage: {
-        status: EnumHttpStatusCode.CLIENT_ERROR_VALIDATION,
+        status: 422,
         source: { pointer: '/data/type' },
         title: 'Erro interno',
         detail: 'Type ausente',

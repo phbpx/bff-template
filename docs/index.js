@@ -45,7 +45,7 @@ const defineDocs = (app) => {
 
     const options = {
       swaggerDefinition,
-      apis: ['**/definitions/*.yaml'],
+      apis: ['**/*.yaml'],
     };
     const swaggerSpec = swaggerJSDoc(options);
 

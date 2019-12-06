@@ -18,17 +18,14 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2019,
   },
-  ignorePatterns: [
-    'src/app.js',
-    'src/core/config.js',
-  ],
+  ignorePatterns: ['src/app.js', 'src/core/config.js'],
   rules: {
-    'camelcase': 'on',
+    camelcase: 'on',
     'global-require': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'linebreak-style': 'off',
     'no-inline-comments': 'error',
-    'complexity': [ 'error', 2 ],
+    complexity: ['error', 2],
     'no-var': 'error',
     'no-param-reassign': 'error',
     'prefer-const': 'error',
@@ -37,14 +34,23 @@ module.exports = {
     'extra-rules/potential-point-free': 'warn',
     'functional/no-let': 'error',
     'functional/prefer-readonly-type': 'error',
-    'functional/immutable-data': [ 'error', { ignorePattern: '^module.exports' } ],
+    'functional/immutable-data': [
+      'error',
+      { ignorePattern: '^module.exports' },
+    ],
     'functional/no-class': 'error',
     'functional/no-return-void': 'error',
     'functional/no-loop-statement': 'error',
     'functional/no-this-expression': 'error',
     'functional/functional-parameters': 'off',
-    'functional/no-conditional-statement': [ 'error', { allowReturningBranches: true } ],
-    'functional/no-expression-statement': [ 'error', { ignorePattern: '^module.exports' } ],
+    'functional/no-conditional-statement': [
+      'error',
+      { allowReturningBranches: true },
+    ],
+    'functional/no-expression-statement': [
+      'error',
+      { ignorePattern: '^module.exports' },
+    ],
     'jest/lowercase-name': 'error',
     'jest/no-duplicate-hooks': 'error',
     'jest/no-expect-resolves': 'error',
@@ -53,9 +59,5 @@ module.exports = {
     'jest/no-truthy-falsy': 'error',
     'jest/valid-title': 'error',
   },
-  plugins: [
-    'functional',
-    'extra-rules',
-    'jest', 'prettier'
-  ],
+  plugins: ['functional', 'extra-rules', 'jest', 'prettier'],
 };
