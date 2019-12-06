@@ -1,0 +1,113 @@
+paths:
+  /payment-slips/{id}:
+    get:
+      tags: 
+      - 'payment-slips'
+      summary: "Get status of payment slip's job"
+      description: 'Return the job status about the given payment slip'
+      produces: 
+      - 'application/vnd.api+json'
+      parameters:
+        - in: path
+          name: 'id'
+          type: integer
+          required: true
+          description: "Payment slip's ID"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/PaymentSlip"
+definitions:
+  PaymentSlip:
+    type: 'object'
+    properties:
+      data:
+        type: 'object'
+        properties:
+          type:
+            type: 'string'
+            example: 'queue-jobs'
+          id:
+            type: 'string'
+            example: ''
+          attributes:
+            type: 'object'
+            properties:
+              status:
+                type: 'string'
+                description: 'emitido, pago, vencido, baixado'
+              digitableLine:
+                type: 'string'
+                description: 'linha digitável'
+              collectionValue:
+                type: 'string'
+                description: 'valor a ser cobrança no boleto'
+              expirationDate:
+                type: 'string'
+                description: 'Data de vencimento do Boleto'
+              createdAtDate:
+                type: 'string'
+                description: 'Data da Emissão do Boleto'
+              paymentDate:
+                type: 'string'
+                description: 'Data do Pagamento'
+              canceledAtDate:
+                type: 'string'
+                description: 'Data do Cancelamento'
+              description:
+                type: 'string'
+                description: 'Descricao do Boleto'
+              penalty:
+                type: 'string'
+                description: 'Multa, por dia, cobrado após vencimento'
+              interestRate:
+                type: 'string'
+                description: 'Juros, por mês, cobrado após vencimento'
+              debtor:
+                type: 'object'
+                properties:
+                  name:
+                    type: 'string'
+                    description: 'Nome do sacado'
+                  document:
+                    type: 'object'
+                    properties:
+                      type:
+                        type: 'string'
+                        description: 'CPF ou CNPJ'
+                      number:
+                        type: 'string'
+                        description: 'número sem pontos e traços'
+                  email:
+                    type: 'string'
+                    description:
+                      'email do debtor para envio do boleto e notificações'
+                  mobilePhone:
+                    type: 'string'
+                    description:
+                      'número do celular do debtor para envio de sms de notificações'
+              document: 
+                type: 'string'
+                description: 'link do pdf'
+          relationships:
+            type: 'object'
+            properties:
+              account:
+                type: 'object'
+                properties:
+                  data:
+                    type: 'object'
+                    properties:
+                      type:
+                        type: 'string'
+                        example: 'accounts'
+                      id:
+                        type: 'string'
+                        example: ''
+          links:
+            type: 'object'
+            properties:
+              self:
+                type: 'string'
+                example: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips/:id'

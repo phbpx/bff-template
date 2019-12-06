@@ -1,0 +1,269 @@
+paths:
+  /payment-slips:
+    get:
+      tags:
+        - 'payment-slips'
+      summary: 'List payment slips'
+      description: 'List all payment slips, order by (under development). Pagination supported.'
+      produces:
+        - 'application/vnd.api+json'
+      parameters:
+        - in: 'query'
+          name: 'number'
+          type: 'integer'
+          description: 'Page number. The default value is 1'
+        - in: 'query'
+          name: 'size'
+          type: 'integer'
+          description: 'Documents count. The default value is 25'
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/PaymentSlipList'
+      security:
+        - api_key: []
+    post:
+      tags:
+        - 'payment-slips'
+      summary: 'Generate a new payment slip'
+      description: 'Return the payment slip generated'
+      produces:
+        - 'application/vnd.api+json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          required: true
+          schema:
+            $ref: '#/definitions/PaymentSlipRequest'
+      responses:
+        201:
+          description: 'Created'
+          schema:
+            $ref: '#/definitions/PaymentSlipJob'
+        422:
+          description: 'Invalid input'
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+        - api_key: []
+
+definitions:
+  PaymentSlipRequest:
+    type: 'object'
+    properties:
+      data:
+        type: 'object'
+        properties:
+          type:
+            type: 'string'
+            example: ''
+          attributes:
+            type: 'object'
+            properties:
+              collectionValue:
+                type: 'string'
+                description: 'valor a ser cobrança no boleto'
+              expirationDate:
+                type: 'string'
+                description: 'Data de vencimento do Boleto'
+              description:
+                type: 'string'
+                description: 'Descricao da cobranca'
+              latePayment:
+                type: 'object'
+                properties:
+                  penalty:
+                    type: 'string'
+                    description: 'Multa, por dia, cobrado após vencimento'
+                  interestRate:
+                    type: 'string'
+                    description: 'Juros, por mês, cobrado após vencimento'
+              debtor:
+                type: 'string'
+                description: 'Dados do Sacado'
+  PaymentSlipJob:
+    type: 'object'
+    properties:
+      data:
+        type: 'object'
+        properties:
+          type:
+            type: 'string'
+            example: 'queue-jobs'
+          id:
+            type: 'string'
+            example: ''
+          attributes:
+            type: 'object'
+            properties:
+              status:
+                type: 'string'
+                example: 'Pending request, waiting other process'
+          relationships:
+            type: 'object'
+            properties:
+              account:
+                type: 'object'
+                properties:
+                  data:
+                    type: 'object'
+                    properties:
+                      type:
+                        type: 'string'
+                        example: 'accounts'
+                      id:
+                        type: 'string'
+                        example: ''
+          links:
+            type: 'object'
+            properties:
+              self:
+                type: 'string'
+                example: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips/queue-jobs/:id'
+  InvalidResponse:
+    type: 'object'
+    properties:
+      errors:
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            status:
+              type: 'integer'
+              example: 422
+            source:
+              type: 'object'
+              properties:
+                pointer:
+                  type: 'string'
+                  example: '/data/attributes/example'
+            title:
+              type: string
+              example: 'Entity that generates the error'
+            detail:
+              type: string
+              example: 'Details about the error'
+  PaymentSlipList:
+    type: 'object'
+    properties:
+      meta:
+        type: 'object'
+        properties:
+          count:
+            type: 'integer'
+            description: 'quantidade de registros'
+            example: 1
+          totalPages:
+            type: 'integer'
+            description: 'número total de páginas'
+            example: 13
+      data:
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            type:
+              type: 'string'
+              example: 'payment-slips'
+            id:
+              type: 'string'
+              example: ''
+            attributes:
+              type: 'object'
+              properties:
+                status:
+                  type: 'string'
+                  description: 'emitido, pago, vencido, baixado'
+                digitableLine:
+                  type: 'string'
+                  description: 'linha digitável'
+                collectionValue:
+                  type: 'string'
+                  description: 'valor a ser cobrança no boleto'
+                expirationDate:
+                  type: 'string'
+                  description: 'Data de vencimento do Boleto'
+                createdAtDate:
+                  type: 'string'
+                  description: 'Data da Emissão do Boleto'
+                paymentDate:
+                  type: 'string'
+                  description: 'Data do Pagamento'
+                canceledAtDate:
+                  type: 'string'
+                  description: 'Data do Cancelamento'
+                description:
+                  type: 'string'
+                  description: 'Descricao do Boleto'
+                penalty:
+                  type: 'string'
+                  description: 'Multa, por dia, cobrado após vencimento'
+                interestRate:
+                  type: 'string'
+                  description: 'Juros, por mês, cobrado após vencimento'
+                debtor:
+                  type: 'object'
+                  properties:
+                    name:
+                      type: 'string'
+                      description: 'Nome do sacado'
+                    document:
+                      type: 'object'
+                      properties:
+                        type:
+                          type: 'string'
+                          description: 'CPF ou CNPJ'
+                        number:
+                          type: 'string'
+                          description: 'número sem pontos e traços'
+                    email:
+                      type: 'string'
+                      description:
+                        'email do debtor para envio do boleto e notificações'
+                    mobilePhone:
+                      type: 'string'
+                      description:
+                        'número do celular do debtor para envio de sms de notificações'
+                document: 
+                  type: 'string'
+                  description: 'link do pdf'
+            relationships:
+              type: 'object'
+              properties:
+                account:
+                  type: 'object'
+                  properties:
+                    data:
+                      type: 'object'
+                      properties:
+                        type:
+                          type: 'string'
+                          example: 'accounts'
+                        id:
+                          type: 'string'
+                          example: ''
+            links:
+              type: 'object'
+              properties:
+                self:
+                  type: 'string'
+                  example: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips/:id'
+      links:
+        type: 'object'
+        properties:
+          self:
+            type: 'string'
+            example: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips?page[number]=3&page[size]=1'
+          first:
+            type: 'string'
+            example: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips?page[number]=1&page[size]=1'
+          prev:
+            type: 'string'
+            example: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips?page[number]=2&page[size]=1'
+          next:
+            type: 'string'
+            example: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips?page[number]=4&page[size]=1'
+          last:
+            type: 'string'
+            example: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips?page[number]=13&page[size]=1'

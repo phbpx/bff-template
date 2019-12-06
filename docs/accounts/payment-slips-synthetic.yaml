@@ -1,0 +1,72 @@
+paths:
+  /payment-slips-synthetic:
+    get:
+      tags:
+        - 'payment-slip-synthetic'
+      summary: 'List synthetic payment slips'
+      description: 'List all synthetic payment slips, order by (under development). No pagination supported.'
+      operationId: 'getPaymentSlipsSynthetic'
+      produces:
+        - 'application/vnd.api+json'
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/PaymentSlipSynthetic'
+      security:
+        - api_key: []
+
+definitions:
+  PaymentSlipSynthetic:
+    type: 'object'
+    properties:
+      data:
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            type:
+              type: 'string'
+              example: 'payment-slips-synthetic'
+            id:
+              type: 'string'
+              example: ''
+            attributes:
+              type: 'object'
+              properties:
+                status:
+                  type: 'string'
+                  example: 'blabla'
+                  enum:
+                    - 'processing'
+                    - 'processed'
+                    - 'created'
+                sumCollectionValue:
+                  type: 'string'
+                  example: ''
+            relationships:
+              type: 'object'
+              properties:
+                account:
+                  type: 'object'
+                  properties:
+                    data:
+                      type: 'object'
+                      properties:
+                        type:
+                          type: 'string'
+                          example: 'accounts'
+                        id:
+                          type: 'string'
+                          example: ''
+            links:
+              type: 'string'
+              example: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips?filter[status]=blabla'
+      links:
+        type: 'object'
+        properties:
+          self:
+            type: 'string'
+            example: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips-synthetic'
+    xml:
+      name: 'PaymentSlipSynthetic'

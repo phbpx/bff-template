@@ -1,10 +1,16 @@
 module.exports = {
   env: {
+    jest: true,
     commonjs: true,
     es6: true,
     node: true,
   },
-  extends: ['airbnb-base'],
+  extends: [
+    'airbnb-base',
+    'prettier',
+    'plugin:jest/recommended',
+    'plugin:jest/style',
+  ],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -17,6 +23,7 @@ module.exports = {
     'src/core/config.js',
   ],
   rules: {
+    'camelcase': 'on',
     'global-require': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'linebreak-style': 'off',
@@ -38,9 +45,17 @@ module.exports = {
     'functional/functional-parameters': 'off',
     'functional/no-conditional-statement': [ 'error', { allowReturningBranches: true } ],
     'functional/no-expression-statement': [ 'error', { ignorePattern: '^module.exports' } ],
+    'jest/lowercase-name': 'error',
+    'jest/no-duplicate-hooks': 'error',
+    'jest/no-expect-resolves': 'error',
+    'jest/no-large-snapshots': ['warn', { maxSize: 25 }],
+    'jest/no-test-return-statement': 'error',
+    'jest/no-truthy-falsy': 'error',
+    'jest/valid-title': 'error',
   },
   plugins: [
     'functional',
     'extra-rules',
+    'jest', 'prettier'
   ],
 };

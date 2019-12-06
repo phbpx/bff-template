@@ -1,0 +1,26 @@
+paths:
+  /payment-slips/queue-jobs/{id}:
+    get:
+      tags:
+        - 'payment-slips'
+      summary: "Get status of payment slip's job"
+      description: 'Return the job status about the given payment slip'
+      produces:
+        - 'application/vnd.api+json'
+      parameters:
+        - in: path
+          name: 'id'
+          type: integer
+          required: true
+          description: "Queue job's ID"
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/PaymentSlipJob'
+        303:
+          description: 'See other'
+          headers:
+            Content-Location:
+              type: 'string'
+              description: 'api.neondeveloper.com.br/payment-slips/v1/accounts/:id/payment-slips/:id'
